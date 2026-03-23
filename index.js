@@ -8,13 +8,6 @@ app.use(express.json())
 app.use(morgan('tiny'))
 app.use(express.static('dist'))
 
-morgan.token('body', (request) => {
-  return JSON.stringify(request.body)
-})
-app.use(
-  morgan(':method :url :status :res[content-length] - :response-time ms :body'),
-)
-
 let persons = [
   {
     id: 1,
@@ -37,6 +30,13 @@ let persons = [
     number: '39-23-6423122',
   },
 ]
+
+morgan.token('body', (request) => {
+  return JSON.stringify(request.body)
+})
+app.use(
+  morgan(':method :url :status :res[content-length] - :response-time ms :body'),
+)
 
 app.get('/api/persons', (request, response) => {
   response.json(persons)
